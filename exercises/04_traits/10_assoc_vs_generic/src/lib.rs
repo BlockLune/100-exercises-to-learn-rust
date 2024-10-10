@@ -1,4 +1,4 @@
-// TODO: Define a new trait, `Power`, that has a method `power` that raises `self`
+// Define a new trait, `Power`, that has a method `power` that raises `self`
 //  to the power of `n`.
 //  The trait definition and its implementations should be enough to get
 //  the tests to compile and pass.
@@ -12,6 +12,40 @@
 // interested in learning more about it.
 // You don't have to though: it's perfectly okay to write three separate
 // implementations manually. Venture further only if you're curious.
+
+trait Power<T> {
+    fn power(&self, n: T) -> Self;
+}
+
+impl Power<u16> for u32 {
+    fn power(&self, n: u16) -> Self {
+        let mut ret = 1 as Self;
+        for _ in 0..n {
+            ret *= self;
+        }
+        ret
+    }
+}
+
+impl Power<u32> for u32 {
+    fn power(&self, n: u32) -> Self {
+        let mut ret = 1 as Self;
+        for _ in 0..n {
+            ret *= self;
+        }
+        ret
+    }
+}
+
+impl Power<&u32> for u32 {
+    fn power(&self, n: &u32) -> Self {
+        let mut ret = 1 as Self;
+        for _ in 0..*n {
+            ret *= self;
+        }
+        ret
+    }
+}
 
 #[cfg(test)]
 mod tests {
