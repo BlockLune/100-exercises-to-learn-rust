@@ -1,4 +1,4 @@
-// TODO: Implement `TryFrom<String>` and `TryFrom<&str>` for `Status`.
+// Implement `TryFrom<String>` and `TryFrom<&str>` for `Status`.
 //  The parsing should be case-insensitive.
 
 #[derive(Debug, PartialEq, Clone)]
@@ -6,6 +6,38 @@ enum Status {
     ToDo,
     InProgress,
     Done,
+}
+
+impl TryFrom<String> for Status {
+    type Error = String;
+    fn try_from(value: String) -> Result<Self, Self::Error> {
+        let v = value.to_lowercase();
+        if v == "todo" {
+            Ok(Status::ToDo)
+        } else if v == "inprogress" {
+            Ok(Status::InProgress)
+        } else if v == "done" {
+            Ok(Status::Done)
+        } else {
+            Err("TryFrom failed".to_string())
+        }
+    }
+}
+
+impl TryFrom<&str> for Status {
+    type Error = String;
+    fn try_from(value: &str) -> Result<Self, Self::Error> {
+        let v = value.to_lowercase();
+        if v == "todo" {
+            Ok(Status::ToDo)
+        } else if v == "inprogress" {
+            Ok(Status::InProgress)
+        } else if v == "done" {
+            Ok(Status::Done)
+        } else {
+            Err("TryFrom failed".to_string())
+        }
+    }
 }
 
 #[cfg(test)]
