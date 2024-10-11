@@ -1,4 +1,4 @@
-// TODO: implement a multi-threaded version of the `sum` function
+// Implement a multi-threaded version of the `sum` function
 //  using `spawn` and `join`.
 //  Given a vector of integers, split the vector into two halves and
 //  sum each half in a separate thread.
@@ -15,7 +15,22 @@
 use std::thread;
 
 pub fn sum(v: Vec<i32>) -> i32 {
-    todo!()
+    let mut left_part: Vec<i32> = Vec::new();
+    let mut right_part: Vec<i32> = Vec::new();
+    for (i, &val) in v.iter().enumerate() {
+        if i < v.len() / 2 {
+            left_part.push(val);
+        } else {
+            right_part.push(val);
+        }
+    }
+    let handle_left = thread::spawn(move || left_part.iter().sum::<i32>());
+    let handle_right = thread::spawn(move || right_part.iter().sum::<i32>());
+
+    let left_sum = handle_left.join().unwrap();
+    let right_sum = handle_right.join().unwrap();
+
+    left_sum + right_sum
 }
 
 #[cfg(test)]
