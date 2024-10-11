@@ -1,5 +1,10 @@
-// TODO: Define a function named `squared` that raises all `i32`s within a slice to the power of 2.
+// Define a function named `squared` that raises all `i32`s within a slice to the power of 2.
 //  The slice should be modified in place.
+fn squared(list: &mut [i32]) {
+    for i in 0..list.len() {
+        list[i] *= list[i];
+    }
+}
 
 #[cfg(test)]
 mod tests {

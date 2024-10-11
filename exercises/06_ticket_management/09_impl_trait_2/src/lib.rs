@@ -1,4 +1,4 @@
-// TODO: Rework the signature of `TicketStore::add_ticket` to use a generic type parameter rather
+// Rework the signature of `TicketStore::add_ticket` to use a generic type parameter rather
 //  than `impl Trait` syntax.
 
 use ticket_fields::{TicketDescription, TicketTitle};
@@ -33,8 +33,14 @@ impl TicketStore {
     // that can be infallibly converted into a `Ticket`.
     // This can make it nicer to use the method, as it removes the syntax noise of `.into()`
     // from the calling site. It can worsen the quality of the compiler error messages, though.
-    pub fn add_ticket(&mut self, ticket: impl Into<Ticket>) {
-        self.tickets.push(ticket.into());
+    // pub fn add_ticket(&mut self, ticket: impl Into<Ticket>) {
+    //     self.tickets.push(ticket.into());
+    // }
+    pub fn add_ticket<T>(&mut self, ticket: T)
+    where
+        T: Into<Ticket>,
+    {
+        self.tickets.push(ticket.into())
     }
 }
 
